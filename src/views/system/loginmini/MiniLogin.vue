@@ -74,12 +74,12 @@
                                                         <a-input class="fix-auto-fill" type="checkbox"
                                                             v-model:value="rememberMe" />
                                                         <span style="margin-left: 5px">{{ t('sys.login.rememberMe')
-                                                            }}</span>
+                                                        }}</span>
                                                     </div>
                                                 </div>
                                                 <div class="aui-forget">
                                                     <a @click="forgetHandelClick"> {{ t('sys.login.forgetPassword')
-                                                        }}</a>
+                                                    }}</a>
                                                 </div>
                                             </div>
                                         </div>
