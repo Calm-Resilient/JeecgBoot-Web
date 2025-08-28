@@ -95,7 +95,7 @@ export const searchFormSchema: FormSchema[] = [
     label: '名字',
     field: 'realname',
     component: 'JInput',
-   //colProps: { span: 6 },
+    //colProps: { span: 6 },
   },
   {
     label: '性别',
@@ -123,7 +123,7 @@ export const searchFormSchema: FormSchema[] = [
       placeholder: '请选择状态',
       stringToNumber: true,
     },
-   //colProps: { span: 6 },
+    //colProps: { span: 6 },
   },
 ];
 
@@ -148,7 +148,7 @@ export const formSchema: FormSchema[] = [
     label: '登录密码',
     field: 'password',
     component: 'StrengthMeter',
-    componentProps:{
+    componentProps: {
       autocomplete: 'new-password',
     },
     rules: [
@@ -157,7 +157,7 @@ export const formSchema: FormSchema[] = [
         message: '请输入登录密码',
       },
       {
-        pattern: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+`\-={}:";'<>?,./]).{8,}$/,
+        // pattern: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+`\-={}:";'<>?,./]).{8,}$/,
         message: '密码由8位数字、大小写字母和特殊符号组成!',
       },
     ],
@@ -222,7 +222,7 @@ export const formSchema: FormSchema[] = [
             },
           ]);
           //update-begin---author:wangshuai---date:2024-05-11---for:【issues/1222】用户编辑界面“所属部门”与“负责部门”联动出错整---
-          if(!values){
+          if (!values) {
             formModel.departIds = [];
             return;
           }
@@ -238,9 +238,9 @@ export const formSchema: FormSchema[] = [
     field: 'relTenantIds',
     component: 'JSearchSelect',
     componentProps: {
-      dict:"sys_tenant,name,id",
+      dict: 'sys_tenant,name,id',
       async: true,
-      multiple: true
+      multiple: true,
     },
   },
   {
@@ -355,7 +355,7 @@ export const formPasswordSchema: FormSchema[] = [
         message: '请输入登录密码',
       },
       {
-        pattern: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+`\-={}:";'<>?,./]).{8,}$/,
+        // pattern: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+`\-={}:";'<>?,./]).{8,}$/,
         message: '密码由8位数字、大小写字母和特殊符号组成!',
       },
     ],

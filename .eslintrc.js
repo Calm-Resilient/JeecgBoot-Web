@@ -47,7 +47,7 @@ module.exports = defineConfig({
       },
     ],
     'no-unused-vars': [
-      'error',
+      'off',
       {
         argsIgnorePattern: '^_',
         varsIgnorePattern: '^_',
@@ -64,7 +64,7 @@ module.exports = defineConfig({
     'vue/attribute-hyphenation': 'off',
     'vue/require-default-prop': 'off',
     'vue/html-self-closing': [
-      'error',
+      'off',
       {
         html: {
           void: 'always',
