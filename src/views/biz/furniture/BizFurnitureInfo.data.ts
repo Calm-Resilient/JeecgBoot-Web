@@ -16,7 +16,17 @@ export const columns: BasicColumn[] = [
     dataIndex: 'name'
   },
   {
-    title: '厂家或者xx厂家，默认厂家',
+    title: '楼栋号',
+    align: "center",
+    dataIndex: 'buildingType'
+  },
+  {
+    title: '楼层',
+    align: "center",
+    dataIndex: 'layerNum'
+  },
+  {
+    title: '厂家描述',
     align: "center",
     dataIndex: 'factory'
   },
@@ -40,15 +50,23 @@ export const columns: BasicColumn[] = [
     align: "center",
     dataIndex: 'special'
   },
+  {
+    title: '家具类型',
+    align: "center",
+    dataIndex: 'furniture'
+  },
 ];
 
 // 高级查询数据
 export const superQuerySchema = {
   color: {title: '颜色描述',order: 0,view: 'text', type: 'string',},
   name: {title: '家具名称',order: 1,view: 'text', type: 'string',},
-  factory: {title: '厂家或者xx厂家，默认厂家',order: 2,view: 'text', type: 'string',},
-  image: {title: '家具图片',order: 3,view: 'text', type: 'string',},
-  area: {title: '位置描述',order: 4,view: 'text', type: 'string',},
-  spec: {title: '规格描述',order: 5,view: 'text', type: 'string',},
-  special: {title: '特殊项描述',order: 6,view: 'text', type: 'string',},
+  buildingType: {title: '楼栋号',order: 2,view: 'text', type: 'string',},
+  layerNum: {title: '楼层',order: 3,view: 'text', type: 'string',},
+  factory: {title: '厂家描述',order: 4,view: 'text', type: 'string',},
+  image: {title: '家具图片',order: 5,view: 'text', type: 'string',},
+  area: {title: '位置描述',order: 6,view: 'text', type: 'string',},
+  spec: {title: '规格描述',order: 7,view: 'text', type: 'string',},
+  special: {title: '特殊项描述',order: 8,view: 'text', type: 'string',},
+  furniture: {title: '家具类型',order: 9,view: 'text', type: 'string',},
 };
