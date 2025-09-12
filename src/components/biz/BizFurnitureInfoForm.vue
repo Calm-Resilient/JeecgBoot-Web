@@ -3,46 +3,50 @@
         <JFormContainer :disabled="disabled">
             <template #detail>
                 <a-form ref="formRef" class="antd-modal-form" :labelCol="labelCol" :wrapperCol="wrapperCol"
-                    name="BizHbcBuildingRoomForm">
+                    name="BizFurnitureInfoForm">
                     <a-row>
                         <a-col :span="24">
-                            <a-form-item label="房间号" v-bind="validateInfos.roomId" id="BizHbcBuildingRoomForm-roomId"
-                                name="roomId">
-                                <a-input v-model:value="formData.roomId" placeholder="请输入房间号" allow-clear></a-input>
+                            <a-form-item label="颜色描述" v-bind="validateInfos.color" id="BizFurnitureInfoForm-color"
+                                name="color">
+                                <a-input v-model:value="formData.color" placeholder="请输入颜色描述" allow-clear></a-input>
                             </a-form-item>
                         </a-col>
                         <a-col :span="24">
-                            <a-form-item label="楼层号" v-bind="validateInfos.layerNum"
-                                id="BizHbcBuildingRoomForm-layerNum" name="layerNum">
-                                <a-input v-model:value="formData.layerNum" placeholder="请输入楼层号" allow-clear></a-input>
+                            <a-form-item label="家具名称" v-bind="validateInfos.name" id="BizFurnitureInfoForm-name"
+                                name="name">
+                                <a-input v-model:value="formData.name" placeholder="请输入家具名称" allow-clear></a-input>
                             </a-form-item>
                         </a-col>
                         <a-col :span="24">
-                            <a-form-item label="0false 1true  是否装修" v-bind="validateInfos.isDecorated"
-                                id="BizHbcBuildingRoomForm-isDecorated" name="isDecorated">
-                                <a-input-number v-model:value="formData.isDecorated" placeholder="请输入0false 1true  是否装修"
-                                    style="width: 100%" />
-                            </a-form-item>
-                        </a-col>
-                        <a-col :span="24">
-                            <a-form-item label="开始时间" v-bind="validateInfos.startTime"
-                                id="BizHbcBuildingRoomForm-startTime" name="startTime">
-                                <a-date-picker placeholder="请选择开始时间" v-model:value="formData.startTime" showTime
-                                    value-format="YYYY-MM-DD HH:mm:ss" style="width: 100%" allow-clear />
-                            </a-form-item>
-                        </a-col>
-                        <a-col :span="24">
-                            <a-form-item label="结束时间" v-bind="validateInfos.endTime" id="BizHbcBuildingRoomForm-endTime"
-                                name="endTime">
-                                <a-date-picker placeholder="请选择结束时间" v-model:value="formData.endTime" showTime
-                                    value-format="YYYY-MM-DD HH:mm:ss" style="width: 100%" allow-clear />
-                            </a-form-item>
-                        </a-col>
-                        <a-col :span="24">
-                            <a-form-item label="关联楼栋表" v-bind="validateInfos.buildingType"
-                                id="BizHbcBuildingRoomForm-buildingType" name="buildingType">
-                                <a-input v-model:value="formData.buildingType" placeholder="请输入关联楼栋表"
+                            <a-form-item label="厂家或者xx厂家，默认厂家" v-bind="validateInfos.factory"
+                                id="BizFurnitureInfoForm-factory" name="factory">
+                                <a-input v-model:value="formData.factory" placeholder="请输入厂家或者xx厂家，默认厂家"
                                     allow-clear></a-input>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :span="24">
+                            <a-form-item label="家具图片" v-bind="validateInfos.imageString"
+                                id="BizFurnitureInfoForm-imageString" name="imageString">
+                                <a-input v-model:value="formData.imageString" placeholder="请输入家具图片"
+                                    allow-clear></a-input>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :span="24">
+                            <a-form-item label="位置描述" v-bind="validateInfos.area" id="BizFurnitureInfoForm-area"
+                                name="area">
+                                <a-input v-model:value="formData.area" placeholder="请输入位置描述" allow-clear></a-input>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :span="24">
+                            <a-form-item label="规格描述" v-bind="validateInfos.spec" id="BizFurnitureInfoForm-spec"
+                                name="spec">
+                                <a-input v-model:value="formData.spec" placeholder="请输入规格描述" allow-clear></a-input>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :span="24">
+                            <a-form-item label="特殊项描述" v-bind="validateInfos.special" id="BizFurnitureInfoForm-special"
+                                name="special">
+                                <a-input v-model:value="formData.special" placeholder="请输入特殊项描述" allow-clear></a-input>
                             </a-form-item>
                         </a-col>
                     </a-row>
@@ -57,7 +61,7 @@ import { ref, reactive, defineExpose, nextTick, defineProps, computed, onMounted
 import { defHttp } from '/@/utils/http/axios';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { getDateByPicker, getValueType } from '/@/utils';
-import { saveOrUpdate } from '/@/api/biz/BizHbcBuildingRoom.api';
+import { saveOrUpdate } from '/@/api/biz/BizFurnitureInfo.api';
 import { Form } from 'ant-design-vue';
 import JFormContainer from '/@/components/Form/src/container/JFormContainer.vue';
 const props = defineProps({
@@ -70,12 +74,13 @@ const useForm = Form.useForm;
 const emit = defineEmits(['register', 'ok']);
 const formData = reactive<Record<string, any>>({
     id: '',
-    roomId: '',
-    layerNum: '',
-    isDecorated: undefined,
-    startTime: '',
-    endTime: '',
-    buildingType: '',
+    color: '',
+    name: '',
+    factory: '',
+    imageString: '',
+    area: '',
+    spec: '',
+    special: '',
 });
 const { createMessage } = useMessage();
 const labelCol = ref<any>({ xs: { span: 24 }, sm: { span: 5 } });
