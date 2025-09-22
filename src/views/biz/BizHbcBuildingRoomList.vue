@@ -145,7 +145,7 @@
     /**
      * 编辑事件
      */
-    function handleEdit(record: Recordable) {
+    function handleEdit(record) {
         registerModal.value.disableSubmit = false;
         registerModal.value.edit(record);
     }
@@ -153,7 +153,7 @@
     /**
      * 详情
      */
-    function handleDetail(record: Recordable) {
+    function handleDetail(record) {
         registerModal.value.disableSubmit = true;
         registerModal.value.edit(record);
     }

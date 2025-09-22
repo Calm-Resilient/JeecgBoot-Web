@@ -4,12 +4,10 @@
         <BasicTable @register="registerTable" :rowSelection="rowSelection">
             <!--插槽:table标题-->
             <template #tableTitle>
-                <a-button type="primary" v-auth="'skip.hbc:biz_wall_quality_info:add'" @click="handleAdd"
-                    preIcon="ant-design:plus-outlined"> 新增</a-button>
-                <a-button type="primary" v-auth="'skip.hbc:biz_wall_quality_info:exportXls'"
-                    preIcon="ant-design:export-outlined" @click="onExportXls"> 导出</a-button>
-                <j-upload-button type="primary" v-auth="'skip.hbc:biz_wall_quality_info:importExcel'"
-                    preIcon="ant-design:import-outlined" @click="onImportXls">导入</j-upload-button>
+                <a-button type="primary" @click="handleAdd" preIcon="ant-design:plus-outlined"> 新增</a-button>
+                <a-button type="primary" preIcon="ant-design:export-outlined" @click="onExportXls"> 导出</a-button>
+                <j-upload-button type="primary" preIcon="ant-design:import-outlined"
+                    @click="onImportXls">导入</j-upload-button>
 
                 <a-dropdown v-if="selectedRowKeys.length > 0">
                     <template #overlay>
@@ -20,12 +18,12 @@
                             </a-menu-item>
                         </a-menu>
                     </template>
-                    <a-button v-auth="'skip.hbc:biz_wall_quality_info:deleteBatch'">批量操作
+                    <a-button>批量操作
                         <Icon icon="mdi:chevron-down"></Icon>
                     </a-button>
                 </a-dropdown>
                 <!-- 高级查询 -->
-                <super-query :config="superQueryConfig" @search="handleSuperQuery" />
+                <!-- <super-query :config="superQueryConfig" @search="handleSuperQuery" /> -->
             </template>
             <!--操作栏-->
             <template #action="{ record }">
@@ -36,18 +34,18 @@
             </template>
         </BasicTable>
         <!-- 表单区域 -->
-        <BizWallQualityInfoModal @register="registerModal" @success="handleSuccess"></BizWallQualityInfoModal>
+        <BizBuildingLayerModal @register="registerModal" @success="handleSuccess"></BizBuildingLayerModal>
     </div>
 </template>
 
-<script lang="ts" name="skip.hbc-bizWallQualityInfo" setup>
+<script lang="ts" name="biz-bizBuildingLayer" setup>
 import { ref, reactive, computed, unref } from 'vue';
 import { BasicTable, useTable, TableAction } from '/@/components/Table';
 import { useModal } from '/@/components/Modal';
 import { useListPage } from '/@/hooks/system/useListPage'
-import BizWallQualityInfoModal from './components/BizWallQualityInfoModal.vue'
-import { columns, searchFormSchema, superQuerySchema } from '/@/api/biz/BizWallQualityInfo.data';
-import { list, deleteOne, batchDelete, getImportUrl, getExportUrl } from '/@/api/biz/BizWallQualityInfo.api';
+import BizBuildingLayerModal from './components/BizBuildingLayerModal.vue'
+import { columns, searchFormSchema, superQuerySchema } from './BizBuildingLayer.data';
+import { list, deleteOne, batchDelete, getImportUrl, getExportUrl } from './BizBuildingLayer.api';
 import { downloadFile } from '/@/utils/common/renderUtils';
 import { useUserStore } from '/@/store/modules/user';
 import { useMessage } from '/@/hooks/web/useMessage';
@@ -64,7 +62,7 @@ const [registerModal, { openModal }] = useModal();
 //注册table数据
 const { prefixCls, tableContext, onExportXls, onImportXls } = useListPage({
     tableProps: {
-        title: 'biz_wall_quality_info',
+        title: 'biz_building_layer',
         api: list,
         columns,
         canResize: true,
@@ -94,7 +92,7 @@ const { prefixCls, tableContext, onExportXls, onImportXls } = useListPage({
         },
     },
     exportConfig: {
-        name: "biz_wall_quality_info",
+        name: "biz_building_layer",
         url: getExportUrl,
         params: queryParam,
     },
@@ -173,7 +171,6 @@ function getTableAction(record) {
         {
             label: '编辑',
             onClick: handleEdit.bind(null, record),
-            auth: 'skip.hbc:biz_wall_quality_info:edit'
         }
     ]
 }
@@ -192,7 +189,6 @@ function getDropDownAction(record) {
                 confirm: handleDelete.bind(null, record),
                 placement: 'topLeft',
             },
-            auth: 'skip.hbc:biz_wall_quality_info:delete'
         }
     ]
 }

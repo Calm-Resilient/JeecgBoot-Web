@@ -1,117 +1,139 @@
-import {BasicColumn} from '/@/components/Table';
-import {FormSchema} from '/@/components/Table';
-import { rules} from '/@/utils/helper/validator';
-import { render } from '/@/utils/common/renderUtils';
-import { getWeekMonthQuarterYear } from '/@/utils';
-//列表数据
+import { h } from 'vue';
+import { BasicColumn } from '/@/components/Table';
+import { FormSchema } from '/@/components/Table';
+
+// 列表数据
 export const columns: BasicColumn[] = [
-   {
+  {
     title: '建筑类型',
     align:"center",
-    dataIndex: 'buildingtype'
-   },
-   {
+    dataIndex: 'buildingTypeText'
+  },
+  {
     title: '当前楼层',
     align:"center",
-    dataIndex: 'curlayer'
-   },
-   {
+    dataIndex: 'curLayer'
+  },
+  {
     title: '墙体编号',
     align:"center",
     dataIndex: 'wallId'
-   },
-   {
+  },
+  {
     title: '区域编号',
     align:"center",
     dataIndex: 'areaId'
-   },
-   {
+  },
+  {
     title: 'A面垂直度得分',
     align:"center",
     dataIndex: 'faceAVerticalScore'
-   },
-   {
+  },
+  {
     title: 'A面平整度得分',
     align:"center",
     dataIndex: 'faceAFlatnessScore'
-   },
-   {
+  },
+  {
     title: 'B面垂直度得分',
     align:"center",
     dataIndex: 'faceBVerticalScore'
-   },
-   {
+  },
+  {
     title: 'B面平整度得分',
     align:"center",
     dataIndex: 'faceBFlatnessScore'
-   },
-   {
+  },
+  {
     title: '检测时间',
     align:"center",
     dataIndex: 'inspectionTime',
-    customRender:({text}) =>{
+    customRender: ({ text }) =>{
       text = !text ? "" : (text.length > 10 ? text.substr(0,10) : text);
       return text;
     },
-   },
-   {
-    title: '创建时间',
+  },
+  {
+    title: '是否合格',
     align:"center",
-    dataIndex: 'createdAt',
-    customRender:({text}) =>{
-      text = !text ? "" : (text.length > 10 ? text.substr(0,10) : text);
-      return text;
-    },
-   },
-   {
-    title: '更新时间',
-    align:"center",
-    dataIndex: 'updatedAt',
-    customRender:({text}) =>{
-      text = !text ? "" : (text.length > 10 ? text.substr(0,10) : text);
-      return text;
-    },
-   },
+    dataIndex: 'ispass',
+    customRender: ({ text }) => {
+      const statusMap = {
+        '0': { text: '暂未确定', color: '#999999', bgColor: '#f5f5f5' },
+        '1': { text: '合格', color: '#ffffff', bgColor: '#52c41a' },
+        '2': { text: '不合格', color: '#ffffff', bgColor: '#ff4d4f' }
+      };
+      const status = statusMap[text] || { text: '未知', color: '#ffffff', bgColor: '#d9d9d9' };
+
+      // ✅ 返回 VNode，而不是字符串
+      return h(
+        'span',
+        {
+          style: {
+            color: status.color,
+            backgroundColor: status.bgColor,
+            padding: '4px 8px',
+            borderRadius: '4px',
+            fontSize: '12px',
+          }
+        },
+        status.text
+      );
+    }
+  },
 ];
-//查询数据
+
+// 查询数据
 export const searchFormSchema: FormSchema[] = [
+  {
+    label: "建筑类型",
+    field: 'buildingType',
+    component: 'JSelectMultiple',
+    componentProps:{
+      dictCode: "building_type"
+    },
+  },
+  {
+    label: "当前楼层",
+    field: 'curLayer',
+    component: 'InputNumber',
+  },
+  {
+    label: "墙体编号",
+    field: 'wallId',
+    component: 'Input',
+  },
+  {
+    label: "区域编号",
+    field: 'areaId',
+    component: 'Input',
+  },
 ];
-//表单数据
+
+// 表单数据 - 表单中不需要是否合格字段，表格中显示彩色按钮
 export const formSchema: FormSchema[] = [
   {
     label: '建筑类型',
-    field: 'buildingtype',
-    component: 'Input',
-    dynamicRules: ({model,schema}) => {
-          return [
-                 { required: true, message: '请输入建筑类型!'},
-          ];
-     },
+    field: 'buildingType',
+    component: 'JDictSelectTag',
+    componentProps:{
+      dictCode:"building_type"
+    },
   },
   {
     label: '当前楼层',
-    field: 'curlayer',
+    field: 'curLayer',
     component: 'InputNumber',
   },
   {
     label: '墙体编号',
     field: 'wallId',
     component: 'Input',
-    dynamicRules: ({model,schema}) => {
-          return [
-                 { required: true, message: '请输入墙体编号!'},
-          ];
-     },
   },
   {
     label: '区域编号',
     field: 'areaId',
     component: 'Input',
-    dynamicRules: ({model,schema}) => {
-          return [
-                 { required: true, message: '请输入区域编号!'},
-          ];
-     },
   },
   {
     label: 'A面垂直度得分',
@@ -141,45 +163,19 @@ export const formSchema: FormSchema[] = [
       valueFormat: 'YYYY-MM-DD'
     },
   },
+  // TODO 主键隐藏字段，目前写死为ID
   {
-    label: '创建时间',
-    field: 'createdAt',
-    component: 'DatePicker',
-    componentProps: {
-      valueFormat: 'YYYY-MM-DD'
-    },
-    dynamicRules: ({model,schema}) => {
-          return [
-                 { required: true, message: '请输入创建时间!'},
-          ];
-     },
+    label: '',
+    field: 'id',
+    component: 'Input',
+    show: false
   },
-  {
-    label: '更新时间',
-    field: 'updatedAt',
-    component: 'DatePicker',
-    componentProps: {
-      valueFormat: 'YYYY-MM-DD'
-    },
-    dynamicRules: ({model,schema}) => {
-          return [
-                 { required: true, message: '请输入更新时间!'},
-          ];
-     },
-  },
-	// TODO 主键隐藏字段，目前写死为ID
-	{
-	  label: '',
-	  field: 'id',
-	  component: 'Input',
-	  show: false
-	},
 ];
 
 // 高级查询数据
 export const superQuerySchema = {
-  buildingtype: {title: '建筑类型',order: 0,view: 'text', type: 'string',},
-  curlayer: {title: '当前楼层',order: 1,view: 'number', type: 'number',},
+  buildingType: {title: '建筑类型',order: 0,view: 'list', type: 'string',dictCode: 'building_type',},
+  curLayer: {title: '当前楼层',order: 1,view: 'number', type: 'number',},
   wallId: {title: '墙体编号',order: 2,view: 'text', type: 'string',},
   areaId: {title: '区域编号',order: 3,view: 'text', type: 'string',},
   faceAVerticalScore: {title: 'A面垂直度得分',order: 4,view: 'text', type: 'string',},
@@ -187,8 +183,11 @@ export const superQuerySchema = {
   faceBVerticalScore: {title: 'B面垂直度得分',order: 6,view: 'text', type: 'string',},
   faceBFlatnessScore: {title: 'B面平整度得分',order: 7,view: 'text', type: 'string',},
   inspectionTime: {title: '检测时间',order: 8,view: 'date', type: 'string',},
-  createdAt: {title: '创建时间',order: 9,view: 'date', type: 'string',},
-  updatedAt: {title: '更新时间',order: 10,view: 'date', type: 'string',},
+  ispass: {title: '是否合格',order: 9,view: 'list', type: 'string',dictCode: '', options: [
+    { value: '0', label: '暂未确定' },
+    { value: '1', label: '合格' },
+    { value: '2', label: '不合格' }
+  ]},
 };
 
 /**
@@ -197,5 +196,6 @@ export const superQuerySchema = {
 */
 export function getBpmFormSchema(_formData): FormSchema[]{
   // 默认和原始表单保持一致 如果流程中配置了权限数据，这里需要单独处理formSchema
-  return formSchema;
+  // 过滤掉是否合格字段，表单中不需要显示
+  return formSchema.filter(item => item.field !== 'ispass');
 }

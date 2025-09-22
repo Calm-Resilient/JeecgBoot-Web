@@ -8,11 +8,9 @@
 import { ref, computed, unref, reactive } from 'vue';
 import { BasicModal, useModalInner } from '/@/components/Modal';
 import { BasicForm, useForm } from '/@/components/Form/index';
-import { formSchema } from '/@/api/biz/BizWallQualityInfo.data';
-import { saveOrUpdate } from '/@/api/biz/BizWallQualityInfo.api';
-import { useMessage } from '/@/hooks/web/useMessage';
+import { getBpmFormSchema } from '../BizWallQualityInfo.data';
+import { saveOrUpdate } from '../BizWallQualityInfo.api';
 import { getDateByPicker } from '/@/utils';
-const { createMessage } = useMessage();
 // Emits声明
 const emit = defineEmits(['register', 'success']);
 const isUpdate = ref(true);
@@ -20,7 +18,7 @@ const isDetail = ref(false);
 //表单配置
 const [registerForm, { setProps, resetFields, setFieldsValue, validate, scrollToField }] = useForm({
     labelWidth: 150,
-    schemas: formSchema,
+    schemas: getBpmFormSchema({}),
     showActionButtonGroup: false,
     baseColProps: { span: 24 }
 });
@@ -46,7 +44,7 @@ const fieldPickers = reactive({
 //设置标题
 const title = computed(() => (!unref(isUpdate) ? '新增' : !unref(isDetail) ? '详情' : '编辑'));
 //表单提交事件
-async function handleSubmit(v) {
+async function handleSubmit() {
     try {
         let values = await validate();
         // 预处理日期数据
@@ -58,14 +56,14 @@ async function handleSubmit(v) {
         closeModal();
         //刷新列表
         emit('success');
-    } catch ({ errorFields }) {
-        if (errorFields) {
-            const firstField = errorFields[0];
+    } catch (error: any) {
+        if (error && error.errorFields) {
+            const firstField = error.errorFields[0];
             if (firstField) {
-                scrollToField(firstField.name, { behavior: 'smooth', block: 'center' });
+                scrollToField(firstField.name, { behavior: 'smooth' });
             }
         }
-        return Promise.reject(errorFields);
+        return Promise.reject(error);
     } finally {
         setModalProps({ confirmLoading: false });
     }
