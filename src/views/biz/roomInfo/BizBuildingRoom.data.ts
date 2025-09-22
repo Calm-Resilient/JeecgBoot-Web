@@ -1,8 +1,6 @@
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
-import { rules } from '/@/utils/helper/validator';
 import { render } from '/@/utils/common/renderUtils';
-import { getWeekMonthQuarterYear } from '/@/utils';
 //列表数据
 export const columns: BasicColumn[] = [
     {
@@ -19,6 +17,14 @@ export const columns: BasicColumn[] = [
         title: '是否装修',
         align: 'center',
         dataIndex: 'isDecorated',
+        customRender: ({ text }) => {
+            const map: Record<string, string> = {
+                '0': '未装修',
+                '1': '已装修',
+            };
+            const key = String(text);
+            return map[key] ?? '';
+        },
     },
     {
         title: '开始时间',
@@ -31,9 +37,9 @@ export const columns: BasicColumn[] = [
         dataIndex: 'endTime',
     },
     {
-        title: '关联楼栋表',
+        title: '楼栋号',
         align: 'center',
-        dataIndex: 'buildingTypeText',
+        dataIndex: 'buildingTypedictText',
     },
     {
         title: '户型',
@@ -76,6 +82,12 @@ export const searchFormSchema: FormSchema[] = [
         label: '是否装修',
         field: 'isDecorated',
         component: 'JDictSelectTag',
+        componentProps: {
+            options: [
+                { value: '0', label: '未装修' },
+                { value: '1', label: '已装修' },
+            ]
+        },
         //colProps: {span: 6},
     },
     {
@@ -107,7 +119,9 @@ export const formSchema: FormSchema[] = [
         componentProps: {
             options: [
                 { value: '0', label: '未装修' },
-                { value: '1', label: '已装修' }
+                { value: 0, label: '未装修' },
+                { value: '1', label: '已装修' },
+                { value: 1, label: '已装修' },
             ]
         },
     },

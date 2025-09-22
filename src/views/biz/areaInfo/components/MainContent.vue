@@ -128,8 +128,7 @@ const addCustomField = () => {
         content: '',
         isNew: true // 标记为新字段
     });
-    // 清除该字段的验证错误
-    delete validationErrors.value[newId];
+    // 清除该字段的验证elete validationErrors.value[newId];
 };
 
 // 删除自定义字段

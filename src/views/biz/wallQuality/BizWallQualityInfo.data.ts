@@ -7,7 +7,7 @@ export const columns: BasicColumn[] = [
   {
     title: '建筑类型',
     align:"center",
-    dataIndex: 'buildingTypeText'
+    dataIndex: 'buildingTypedictText'
   },
   {
     title: '当前楼层',
@@ -15,7 +15,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'curLayer'
   },
   {
-    title: '墙体编号',
+    title: '墙体/地板编号',
     align:"center",
     dataIndex: 'wallId'
   },
@@ -44,6 +44,11 @@ export const columns: BasicColumn[] = [
     align:"center",
     dataIndex: 'faceBFlatnessScore'
   },
+  {
+    title: '地板极差',
+    align:"center",
+    dataIndex: 'range'
+   },
   {
     title: '检测时间',
     align:"center",
@@ -99,6 +104,17 @@ export const searchFormSchema: FormSchema[] = [
     component: 'InputNumber',
   },
   {
+    label: "类型",
+    field: 'type',
+    component: 'JDictSelectTag',
+    componentProps:{
+      options: [
+        { value: '1', label: '墙体' },
+        { value: '0', label: '地板' }
+      ]
+    },
+  },
+  {
     label: "墙体编号",
     field: 'wallId',
     component: 'Input',
@@ -126,7 +142,7 @@ export const formSchema: FormSchema[] = [
     component: 'InputNumber',
   },
   {
-    label: '墙体编号',
+    label: '墙体/地板编号',
     field: 'wallId',
     component: 'Input',
   },
@@ -156,12 +172,30 @@ export const formSchema: FormSchema[] = [
     component: 'Input',
   },
   {
+    label: '地板极差',
+    field:"range",
+    component: 'Input'
+  },
+  {
     label: '检测时间',
     field: 'inspectionTime',
     component: 'DatePicker',
     componentProps: {
       valueFormat: 'YYYY-MM-DD'
     },
+  },
+  {
+    label: '是否合格',
+    field: 'ispass',
+    component: 'JDictSelectTag',
+    componentProps:{
+        dictCode:"",
+        options: [
+          { value: '0', label: '暂未确定' },
+          { value: '1', label: '合格' },
+          { value: '2', label: '不合格' }
+        ]
+     },
   },
   // TODO 主键隐藏字段，目前写死为ID
   {
@@ -196,6 +230,5 @@ export const superQuerySchema = {
 */
 export function getBpmFormSchema(_formData): FormSchema[]{
   // 默认和原始表单保持一致 如果流程中配置了权限数据，这里需要单独处理formSchema
-  // 过滤掉是否合格字段，表单中不需要显示
-  return formSchema.filter(item => item.field !== 'ispass');
+  return formSchema;
 }

@@ -76,7 +76,7 @@
                                 <div class="progress-fill" :style="{ width: progressPercentage + '%' }"></div>
                             </div>
                             <span class="progress-text">{{ formData.builtLayer || 0 }}/{{ formData.totalLayer || 0
-                                }}</span>
+                            }}</span>
                         </div>
                     </div>
                 </div>
@@ -92,7 +92,7 @@
             <div class="info-panel">
                 <h3 class="panel-title">施工概览</h3>
                 <div class="info-card">
-                    <div class="card-title">{{ currentBuilding?.buildingTypeText || '未选择楼栋' }}</div>
+                    <div class="card-title">{{ currentBuilding?.buildingTypedictText || '未选择楼栋' }}</div>
 
                     <div class="info-row">
                         <span class="info-label">设计楼层</span>
@@ -224,7 +224,7 @@ const saveBuildingInfo = async () => {
         const payload = {
             ...formData.value,
             buildingType: currentBuilding.value?.buildingType,
-            buildingTypeText: currentBuilding.value?.buildingTypeText
+            buildingTypedictText: currentBuilding.value?.buildingTypedictText
         };
 
         // 调用 API 保存

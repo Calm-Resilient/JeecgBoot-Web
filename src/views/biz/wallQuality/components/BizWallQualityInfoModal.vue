@@ -30,10 +30,15 @@ const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data
     isUpdate.value = !!data?.isUpdate;
     isDetail.value = !!data?.showFooter;
     if (unref(isUpdate)) {
-        //表单赋值
-        await setFieldsValue({
-            ...data.record,
-        });
+        //表单赋值 - 处理是否合格字段的数据转换
+        const formData = { ...data.record };
+
+        // 确保 ispass 字段为字符串类型
+        if (formData.ispass !== undefined && formData.ispass !== null) {
+            formData.ispass = String(formData.ispass);
+        }
+
+        await setFieldsValue(formData);
     }
     // 隐藏底部时禁用整个表单
     setProps({ disabled: !data?.showFooter })
@@ -49,6 +54,12 @@ async function handleSubmit() {
         let values = await validate();
         // 预处理日期数据
         changeDateValue(values);
+
+        // 确保 ispass 字段为数字类型提交给后端
+        if (values.ispass !== undefined && values.ispass !== null) {
+            values.ispass = Number(values.ispass);
+        }
+
         setModalProps({ confirmLoading: true });
         //提交表单
         await saveOrUpdate(values, isUpdate.value);

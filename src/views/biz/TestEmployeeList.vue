@@ -12,11 +12,11 @@
         <BasicTable @register="registerTable" :rowSelection="rowSelection">
             <!--插槽:table标题-->
             <template #tableTitle>
-                <a-button type="primary" v-auth="'biz:test_employee:add'" @click="handleAdd"
+                <a-button type="primary"  @click="handleAdd"
                     preIcon="ant-design:plus-outlined"> 新增</a-button>
-                <a-button type="primary" v-auth="'biz:test_employee:exportXls'" preIcon="ant-design:export-outlined"
+                <a-button type="primary"  preIcon="ant-design:export-outlined"
                     @click="onExportXls"> 导出</a-button>
-                <j-upload-button type="primary" v-auth="'biz:test_employee:importExcel'"
+                <j-upload-button type="primary" 
                     preIcon="ant-design:import-outlined" @click="onImportXls">导入</j-upload-button>
                 <a-dropdown v-if="selectedRowKeys.length > 0">
                     <template #overlay>
@@ -27,7 +27,7 @@
                             </a-menu-item>
                         </a-menu>
                     </template>
-                    <a-button v-auth="'biz:test_employee:deleteBatch'">批量操作
+                    <a-button >批量操作
                         <Icon icon="mdi:chevron-down"></Icon>
                     </a-button>
                 </a-dropdown>
@@ -174,8 +174,7 @@ function getTableAction(record) {
     return [
         {
             label: '编辑',
-            onClick: handleEdit.bind(null, record),
-            auth: 'biz:test_employee:edit'
+            onClick: handleEdit.bind(null, record)
         },
     ];
 }

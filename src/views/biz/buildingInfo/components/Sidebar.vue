@@ -4,7 +4,7 @@
             <!-- 楼栋列表 -->
             <div v-for="building in buildingList" :key="building.id" class="nav-item"
                 :class="{ active: selectedBuilding?.id === building.id }" @click="setActive(building)">
-                {{ building.buildingTypeText || '未知楼栋' }}
+                {{ building.buildingTypedictText || '未知楼栋' }}
             </div>
 
             <!-- 如果没有数据，显示提示 -->
@@ -38,7 +38,7 @@ const buildingList = ref([
         "createTime": null,
         "updateTime": null,
         "delFlag": 0,
-        "buildingTypeText": "楼7"
+        "buildingTypedictText": "楼7"
     },
     {
         "id": "101525944493146113",
@@ -54,7 +54,7 @@ const buildingList = ref([
         "createTime": null,
         "updateTime": null,
         "delFlag": 0,
-        "buildingTypeText": "楼8"
+        "buildingTypedictText": "楼8"
     },
     {
         "id": "101525944493146114",
@@ -70,7 +70,7 @@ const buildingList = ref([
         "createTime": null,
         "updateTime": null,
         "delFlag": 0,
-        "buildingTypeText": "楼10"
+        "buildingTypedictText": "楼10"
     }
 ]);
 const selectedBuilding = ref(null);

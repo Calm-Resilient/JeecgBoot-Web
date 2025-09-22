@@ -11,7 +11,7 @@ export const columns: BasicColumn[] = [
   {
     title: '状态',
     align:"center",
-    dataIndex: 'stateText'
+    dataIndex: 'statedictText'
   },
    {
     title: '计划开始时间',
@@ -68,9 +68,9 @@ export const columns: BasicColumn[] = [
     },
    },
    {
-    title: '楼栋编号,关联楼栋表',
+    title: '楼栋号',
     align:"center",
-    dataIndex: 'buildingTypeText'
+    dataIndex: 'buildingTypedictText'
    },
 ];
 //查询数据
@@ -184,7 +184,7 @@ export const superQuerySchema = {
   buildEndTime: {title: '实际结束时间',order: 5,view: 'date', type: 'string',},
   fitmentStartTime: {title: '装修开始时间',order: 6,view: 'date', type: 'string',},
   fitmentEndTime: {title: '装修结束时间',order: 7,view: 'date', type: 'string',},
-  buildingType: {title: '楼栋编号',order: 8,view: 'list', type: 'string',dictCode: 'building_type',},
+  buildingType: {title: '楼栋号',order: 8,view: 'list', type: 'string',dictCode: 'building_type',},
 };
 
 /**
