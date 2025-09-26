@@ -28,7 +28,6 @@ const setting: ProjectConfig = {
     showLogo: true,
     showFooter: false,
     aiIconShow: false,
-
     // 头部配置
     headerSetting: {
         bgColor: "#ffffff",
@@ -39,7 +38,7 @@ const setting: ProjectConfig = {
         showFullScreen: false,
         showDoc: false,
         showNotice: true,
-        showSearch: true
+        showSearch: false,
     },
 
     // 菜单配置

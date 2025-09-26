@@ -159,7 +159,7 @@ export const formSchema: FormSchema[] = [
     {
         label: '预览图',
         field: 'images',
-        component: 'JUpload',
+        component: 'JImageUpload',
         componentProps: {
             fileMax: 5,
         },

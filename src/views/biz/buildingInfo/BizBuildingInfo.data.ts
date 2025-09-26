@@ -8,6 +8,11 @@ export const columns: BasicColumn[] = [
     dataIndex: 'buildingType'
    },
    {
+    title: '文件',
+    align:"center",
+    dataIndex: 'files'
+   },
+   {
     title: '总层数',
     align:"center",
     dataIndex: 'totalLayer'
@@ -53,6 +58,7 @@ export const formSchema: FormSchema[] = [
     field: 'buildingType',
     component: 'Input',
   },
+  
   {
     label: '总层数',
     field: 'totalLayer',
@@ -82,6 +88,17 @@ export const formSchema: FormSchema[] = [
     label: '联系电话',
     field: 'phone',
     component: 'Input',
+  },
+  {
+    label: '文件',
+    field: 'files',
+    component: 'JUpload',
+    componentProps: {
+      fileType: 'file',
+      maxCount: 5,
+      multiple: false,
+      text: '上传文件'
+    },
   },
   {
     label: '当前施工步骤字典',

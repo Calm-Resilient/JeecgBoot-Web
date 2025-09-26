@@ -1,4 +1,7 @@
-import {BasicColumn} from '/@/components/Table';
+import { BasicColumn } from '/@/components/Table';
+import { h } from 'vue';
+import { getFileAccessHttpUrl } from '/@/utils/common/compUtils';
+import { createImgPreview } from '/@/components/Preview/index';
 //列表数据
 export const columns: BasicColumn[] = [
   {
@@ -14,10 +17,10 @@ export const columns: BasicColumn[] = [
   {
     title: '楼栋号',
     align: "center",
-    dataIndex: 'buildingType'
+    dataIndex: 'buildingTypedictText'
   },
   {
-    title: '楼层',
+    title: '楼层(层)',
     align: "center",
     dataIndex: 'layerNum'
   },
@@ -29,7 +32,47 @@ export const columns: BasicColumn[] = [
   {
     title: '家具图片',
     align: "center",
-    dataIndex: 'imageString'
+    dataIndex: 'image',
+    customRender: ({ text }) => {
+      if (!text) return '';
+      const rawList: string[] = Array.isArray(text)
+        ? text
+        : String(text)
+            .split(',')
+            .map((u) => u.trim())
+            .filter((u) => !!u);
+      if (rawList.length === 0) return '';
+      const fullList = rawList.map((u) => getFileAccessHttpUrl(u));
+      const thumbs = fullList.slice(0, 3);
+      return h(
+        'div',
+        {
+          style: {
+            display: 'flex',
+            gap: '6px',
+            alignItems: 'center',
+            justifyContent: 'center',
+          },
+        },
+        thumbs.map((src, index) =>
+          h('img', {
+            src,
+            style: {
+              width: '60px',
+              height: '60px',
+              objectFit: 'cover',
+              borderRadius: '4px',
+              cursor: 'pointer',
+            },
+            onClick: () =>
+              createImgPreview({
+                imageList: fullList,
+                index,
+              }),
+          }),
+        ),
+      );
+    },
   },
   {
     title: '位置描述',

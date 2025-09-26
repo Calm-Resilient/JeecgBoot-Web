@@ -320,7 +320,7 @@ watch(
 .form-content {
     display: grid;
     grid-auto-flow: column;
-    grid-template-rows: repeat(6, auto);
+    grid-template-rows: repeat(4, auto);
     gap: 1rem;
     margin-bottom: 1rem;
 }

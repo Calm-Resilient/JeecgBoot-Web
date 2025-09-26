@@ -47,7 +47,7 @@ export const columns: BasicColumn[] = [
   {
     title: '地板极差',
     align:"center",
-    dataIndex: 'range'
+    dataIndex: 'floorRange'
    },
   {
     title: '检测时间',
@@ -173,7 +173,7 @@ export const formSchema: FormSchema[] = [
   },
   {
     label: '地板极差',
-    field:"range",
+    field:"floorRange",
     component: 'Input'
   },
   {

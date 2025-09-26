@@ -1,7 +1,7 @@
 <template>
     <main class="main-content">
         <div class="content-header">
-            <h2 class="content-title">{{ currentBuilding?.buildingTypeText || '未选择楼栋' }}</h2>
+            <h2 class="content-title">{{ currentBuilding?.buildingTypedictText || '未选择楼栋' }}</h2>
             <div class="last-update">上次更新时间：{{ formatUpdateTime(currentBuilding?.updateTime) }}</div>
         </div>
 
@@ -17,6 +17,7 @@
                             <span class="unit">层</span>
                         </div>
                     </div>
+
 
                     <!-- 设计高度 -->
                     <div class="form-group">
@@ -68,6 +69,19 @@
                         </select>
                     </div>
 
+
+
+
+                    <!-- 设计楼层附件 -->
+                    <div class="form-group">
+                        <label class="form-label">附件</label>
+                        <j-upload v-model:value="formData.files" :fileType="'file'" :returnUrl="true" :multiple="true"
+                            :maxCount="20" text="上传附件">
+                        </j-upload>
+
+                    </div>
+
+
                     <!-- 施工进度条 - 跨两列显示 -->
                     <div class="form-group progress-group full-width">
                         <label class="form-label">施工进度</label>
@@ -76,7 +90,7 @@
                                 <div class="progress-fill" :style="{ width: progressPercentage + '%' }"></div>
                             </div>
                             <span class="progress-text">{{ formData.builtLayer || 0 }}/{{ formData.totalLayer || 0
-                            }}</span>
+                                }}</span>
                         </div>
                     </div>
                 </div>
@@ -137,8 +151,11 @@ import { buildingInfoStore } from '../BuildingInfoStore';
 import { ref, watch, computed } from 'vue';
 import { saveBuildingInfo as apiSaveBuildingInfo } from '../BizBuildingInfo.api';
 import { buildingInfoEmitter, BuildingInfoEvents } from '../event';
+import { useMessage } from '/@/hooks/web/useMessage';
+import JUpload from '/@/components/Form/src/jeecg/components/JUpload/JUpload.vue';
 
 const store = buildingInfoStore();
+const { createMessage } = useMessage();
 
 // 表单数据
 const formData = ref({
@@ -149,7 +166,9 @@ const formData = ref({
     height: 0,
     manager: '',
     phone: '',
-    stepType: ''
+    stepType: '',
+    files: ''  // 新增files字段
+
 });
 
 // 存储初始数据，用于取消操作
@@ -161,7 +180,8 @@ const originalFormData = ref({
     height: 0,
     manager: '',
     phone: '',
-    stepType: ''
+    stepType: '',
+    files: ''  // 新增files字段
 });
 
 // 当前选中的楼栋
@@ -211,7 +231,8 @@ const initFormData = () => {
             height: currentBuilding.value.height || 0,
             manager: currentBuilding.value.manager || '',
             phone: currentBuilding.value.phone || '',
-            stepType: currentBuilding.value.stepType || ''
+            stepType: currentBuilding.value.stepType || '',
+            files: currentBuilding.value.files || ''
         };
         formData.value = { ...data };
         originalFormData.value = { ...data }; // 保存初始数据
@@ -230,17 +251,6 @@ const saveBuildingInfo = async () => {
         // 调用 API 保存
         const response = await apiSaveBuildingInfo(payload);
 
-        // 显示保存成功提示 - 更大更靠下的弹窗
-        createMessage.success({
-            content: '保存成功',
-            duration: 3000, // 显示3秒
-            key: 'save-success',
-            style: {
-                fontSize: '16px',
-                minWidth: '200px',
-                marginTop: '100px' // 往下偏一些
-            }
-        });
 
         // 更新 store 中的数据
         store.updateCurrentBuildingData(payload);
