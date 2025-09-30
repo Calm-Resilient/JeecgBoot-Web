@@ -12,11 +12,11 @@
     import {computed, defineComponent} from 'vue';
     import {defHttp} from '/@/utils/http/axios';
     import { propTypes } from '/@/utils/propTypes';
-    import {getBpmFormSchema} from '../BizFurnitureInfo.data';
-    import {saveOrUpdate} from '../BizFurnitureInfo.api';
+    import {getBpmFormSchema} from '../BizInterfaceLog.data';
+    import {saveOrUpdate} from '../BizInterfaceLog.api';
     
     export default defineComponent({
-        name: "BizFurnitureInfoForm",
+        name: "BizInterfaceLogForm",
         components:{
             BasicForm
         },
@@ -40,7 +40,7 @@
             });
 
             let formData = {};
-            const queryByIdUrl = '/biz/bizFurnitureInfo/queryById';
+            const queryByIdUrl = '/biz/bizInterfaceLog/queryById';
             async function initFormData(){
                 let params = {id: props.formData.dataId};
                 const data = await defHttp.get({url: queryByIdUrl, params});

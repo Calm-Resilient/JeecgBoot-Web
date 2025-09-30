@@ -5,7 +5,7 @@
      <!--插槽:table标题-->
       <template #tableTitle>
           <a-button type="primary"  @click="handleAdd" preIcon="ant-design:plus-outlined"> 新增</a-button>
-          <a-button  type="primary" preIcon="ant-design:export-outlined" @click="onExportXls"> 导出</a-button>
+          <a-button  type="primary"  preIcon="ant-design:export-outlined" @click="onExportXls"> 导出</a-button>
           <j-upload-button type="primary"  preIcon="ant-design:import-outlined" @click="onImportXls">导入</j-upload-button>
 
           <a-dropdown v-if="selectedRowKeys.length > 0">
@@ -17,10 +17,12 @@
                   </a-menu-item>
                 </a-menu>
               </template>
-              <a-button>批量操作
+              <a-button >批量操作
                 <Icon icon="mdi:chevron-down"></Icon>
               </a-button>
         </a-dropdown>
+        <!-- 高级查询 -->
+        <super-query :config="superQueryConfig" @search="handleSuperQuery" />
       </template>
        <!--操作栏-->
       <template #action="{ record }">
@@ -31,18 +33,19 @@
       </template>
     </BasicTable>
     <!-- 表单区域 -->
-    <BizFurnitureInfoModal @register="registerModal" @success="handleSuccess"></BizFurnitureInfoModal>
+    <BizInterfaceInfoModal @register="registerModal" @success="handleSuccess"></BizInterfaceInfoModal>
   </div>
 </template>
 
-<script lang="ts" name="biz-bizFurnitureInfo" setup>
+<script lang="ts" name="biz-bizInterfaceInfo" setup>
   import {ref, reactive, computed, unref} from 'vue';
   import {BasicTable, useTable, TableAction} from '/@/components/Table';
   import {useModal} from '/@/components/Modal';
   import { useListPage } from '/@/hooks/system/useListPage'
-  import BizFurnitureInfoModal from './components/BizFurnitureInfoModal.vue'
-  import {columns, searchFormSchema, superQuerySchema} from './BizFurnitureInfo.data';
-  import {list, deleteOne, batchDelete, getImportUrl,getExportUrl} from './BizFurnitureInfo.api';
+  import BizInterfaceInfoModal from './components/BizInterfaceInfoModal.vue'
+  import {columns, searchFormSchema, superQuerySchema} from './BizInterfaceInfo.data';
+  import {list, deleteOne, batchDelete, getImportUrl,getExportUrl} from './BizInterfaceInfo.api';
+  import { downloadFile } from '/@/utils/common/renderUtils';
   import { useUserStore } from '/@/store/modules/user';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { getDateByPicker } from '/@/utils';
@@ -58,7 +61,7 @@
   //注册table数据
   const { prefixCls,tableContext,onExportXls,onImportXls } = useListPage({
       tableProps:{
-           title: 'biz_furniture_info',
+           title: '接口信息配置',
            api: list,
            columns,
            canResize:true,
@@ -88,7 +91,7 @@
             },
       },
        exportConfig: {
-            name:"biz_furniture_info",
+            name:"接口信息配置",
             url: getExportUrl,
             params: queryParam,
           },

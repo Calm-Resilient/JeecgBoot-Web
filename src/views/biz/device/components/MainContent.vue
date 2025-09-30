@@ -64,7 +64,7 @@
 
             <!-- 右侧预览 -->
             <div class="info-panel">
-                <h3 class="panel-title">设备概览</h3>
+                <h3 class="panel-title">三维卡片预览</h3>
                 <div class="info-card">
                     <div class="card-title">{{ currentDeviceType || '未选择设备' }}</div>
 
@@ -496,6 +496,8 @@ onBeforeUnmount(() => {
 .info-panel {
     width: 18rem;
     flex-shrink: 0;
+    border-left: 2px solid #e8e8e8;
+    padding-left: 1rem;
 }
 
 .info-card {

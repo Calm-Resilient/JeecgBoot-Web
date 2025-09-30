@@ -13,7 +13,8 @@
                     <div class="form-group">
                         <label class="form-label">设计楼层</label>
                         <div class="input-with-unit">
-                            <input type="number" class="form-input" v-model="formData.totalLayer" />
+                            <input type="number" class="form-input" v-model="formData.totalLayer"
+                            />
                             <span class="unit">层</span>
                         </div>
                     </div>
@@ -90,7 +91,7 @@
                                 <div class="progress-fill" :style="{ width: progressPercentage + '%' }"></div>
                             </div>
                             <span class="progress-text">{{ formData.builtLayer || 0 }}/{{ formData.totalLayer || 0
-                                }}</span>
+                            }}</span>
                         </div>
                     </div>
                 </div>
@@ -104,7 +105,7 @@
 
             <!-- 右侧预览 -->
             <div class="info-panel">
-                <h3 class="panel-title">施工概览</h3>
+                <h3 class="panel-title">三维卡片预览</h3>
                 <div class="info-card">
                     <div class="card-title">{{ currentBuilding?.buildingTypedictText || '未选择楼栋' }}</div>
 
@@ -505,6 +506,8 @@ watch(
 .info-panel {
     width: 18rem;
     flex-shrink: 0;
+    border-left: 2px solid #e8e8e8;
+    padding-left: 1rem;
 }
 
 .info-card {

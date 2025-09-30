@@ -4,7 +4,7 @@
       <div class="aui-form">
         <div class="aui-image">
           <div class="aui-image-text">
-            <img :src="jeecgAdTextImg" alt="" />
+<!--            <img :src="jeecgAdTextImg" alt="" />-->
           </div>
         </div>
         <div class="aui-formBox">

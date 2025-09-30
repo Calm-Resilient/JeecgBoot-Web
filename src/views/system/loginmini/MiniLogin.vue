@@ -19,7 +19,7 @@
                         <div class="aui-image">
                             <div class="aui-image-text">
                                 <!--登录的左侧图片-->
-                                <!--                                <img :src="adTextImg" />-->
+<!--                                              <img :src="adTextImg" />-->
                             </div>
                         </div>
                         <div class="aui-formBox">

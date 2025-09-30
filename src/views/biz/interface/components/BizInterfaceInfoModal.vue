@@ -1,6 +1,6 @@
 <template>
   <BasicModal v-bind="$attrs" @register="registerModal" destroyOnClose :title="title" :width="800" @ok="handleSubmit">
-      <BasicForm @register="registerForm" name="BizFurnitureInfoForm" />
+      <BasicForm @register="registerForm" name="BizInterfaceInfoForm" />
   </BasicModal>
 </template>
 
@@ -8,8 +8,8 @@
     import {ref, computed, unref, reactive} from 'vue';
     import {BasicModal, useModalInner} from '/@/components/Modal';
     import {BasicForm, useForm} from '/@/components/Form/index';
-    import {formSchema} from '../BizFurnitureInfo.data';
-    import {saveOrUpdate} from '../BizFurnitureInfo.api';
+    import {formSchema} from '../BizInterfaceInfo.data';
+    import {saveOrUpdate} from '../BizInterfaceInfo.api';
     import { useMessage } from '/@/hooks/web/useMessage';
     import { getDateByPicker } from '/@/utils';
     const { createMessage } = useMessage();

@@ -5,6 +5,8 @@ import AIcon from '/@/components/jeecg/AIcon.vue';
  import Editor from '/@/components/Tinymce/src/Editor.vue'
 
 import { Button, JUploadButton } from './Button';
+import HelpTitle from './Basic/HelpTitle/index.vue';
+import HelpIcon from './Basic/HelpIcon/index.vue';
 
 // 按需注册antd的组件
 import {
@@ -59,7 +61,7 @@ import {
   Rate,
   Progress
 } from 'ant-design-vue';
-const compList = [AntButton.Group, Icon, AIcon, JUploadButton];
+const compList = [AntButton.Group, Icon, AIcon, JUploadButton, HelpTitle, HelpIcon];
 
 
 export function registerGlobComp(app: App) {
@@ -68,7 +70,7 @@ export function registerGlobComp(app: App) {
   });
   
   //仪表盘依赖Tinymce，需要提前加载（没办法按需加载了）
-  app.component(Editor.name, Editor);
+  app.component(Editor.name || Editor.displayName, Editor);
   // update-begin--author:liaozhiyang---date:20240308---for：【QQYUN-8241】Tinymce异步加载
   // app.component(
   //   'Tinymce',

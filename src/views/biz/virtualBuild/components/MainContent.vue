@@ -39,8 +39,15 @@
 
                     <!-- 无分类区域 -->
                     <div class="category-section no-category-section">
-                        <h3 class="category-title">其他信息</h3>
-
+                        <h3 class="category-title">
+                            其他信息
+                            <a-tooltip placement="right">
+                                <template #title>
+                                    <div>未选择分类会展示在该区域</div>
+                                </template>
+                                <QuestionCircleOutlined class="help-icon" />
+                            </a-tooltip>
+                        </h3>
                         <!-- 无分类的字段列表（可编辑） -->
                         <div class="category-fields">
                             <div v-for="(field, index) in fieldsWithoutCategory" :key="field.id || index"
@@ -50,6 +57,7 @@
                                     <input type="text" class="form-input" v-model="field.fieldContent"
                                         :placeholder="field.fieldConfig || '请输入内容'" :data-field="index"
                                         data-category="other" />
+
                                 </div>
                             </div>
                         </div>
@@ -76,7 +84,7 @@
 
             <!-- 右侧预览 -->
             <div class="info-panel">
-                <h3 class="panel-title">信息概览</h3>
+                <h3 class="panel-title">三维卡片预览</h3>
                 <div class="info-card">
                     <div class="card-title">{{ currentCategory || '未选择分类' }}</div>
 
@@ -137,6 +145,7 @@
 
 <script setup lang="ts">
 import { ref, watch, computed, onMounted, onBeforeUnmount, type Ref } from 'vue';
+import { QuestionCircleOutlined } from '@ant-design/icons-vue';
 import { virtualBuildStore, type CategoryItem, type FieldItem } from '../VirtualBuildStore';
 import { getVirtualBuildList, batchSaveOrUpdate, saveField } from '../VirtualBuild.api';
 import { virtualBuildEmitter, VirtualBuildEvents } from '../event';
@@ -548,6 +557,8 @@ watch(currentCategoryCode, (newCode) => {
 .info-panel {
     width: 16rem;
     flex-shrink: 0;
+    border-left: 2px solid #e8e8e8;
+    padding-left: 1rem;
 }
 
 .panel-title {
@@ -661,6 +672,19 @@ watch(currentCategoryCode, (newCode) => {
     color: #333;
     margin-bottom: 1rem;
 }
+
+.help-icon {
+    color: #999;
+    font-size: 14px;
+    cursor: help;
+    transition: color 0.2s;
+    margin-left: 4px;
+}
+
+.help-icon:hover {
+    color: #1890ff;
+}
+
 
 .category-fields {
     display: grid;

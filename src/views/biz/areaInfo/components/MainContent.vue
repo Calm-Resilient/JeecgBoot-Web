@@ -9,7 +9,6 @@
             <div class="form-section">
                 <div class="tabs">
                     <div class="tab active">窗口信息</div>
-                    <div class="tab">模型效果</div>
                 </div>
 
                 <!-- 中间字段区域 -->
@@ -25,7 +24,9 @@
                         <div class="custom-field-row">
                             <input type="text" class="form-input custom-title"
                                 :class="{ 'error': hasFieldError(field.id, 'title'), 'shake': hasFieldError(field.id, 'title') }"
-                                placeholder="字段标题" v-model="field.title" />
+                                placeholder="字段标题" v-model="field.title" 
+                                
+                            />
                             <!-- 删除按钮 - 只有新字段才能删除 -->
                             <button v-if="field.isNew" type="button" class="remove-btn"
                                 @click="removeCustomField(index)">
@@ -61,7 +62,7 @@
 
             <!-- 右侧预览 -->
             <div class="info-panel">
-                <h3 class="panel-title">显示概览</h3>
+                <h3 class="panel-title">三维卡片预览</h3>
                 <div class="info-card">
                     <div class="card-title">{{ store.content[0]?.buildingType || '未命名区域' }}</div>
 
@@ -404,6 +405,8 @@ watch(
 .info-panel {
     width: 18rem;
     flex-shrink: 0;
+    border-left: 2px solid #e8e8e8;
+    padding-left: 1rem;
 }
 
 .info-card {
